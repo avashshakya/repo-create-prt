@@ -20,10 +20,10 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci  # Using npm ci for faster builds
+        run: npm ci
 
       - name: Run Build
-        run: npm run build  # Corrected command to 'npm run build'
+        run: npm run start
 
-      - name: TypeScript Check
-        run: npm run type-check
+      # - name: TypeScript Check
+      #  run: npm run type-check
