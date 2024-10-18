@@ -4,8 +4,8 @@ COPY package*.json .
 RUN npm install
 COPY . .
 
-FROM node:20.18.0-alpine
+FROM gcr.io/distroless/nodejs20-debian12
 WORKDIR /app
 COPY --from=builder /app .
 EXPOSE 8080
-CMD [ "npm", "run", "start" ]
+CMD [ "src/App.tsx" ]
