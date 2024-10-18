@@ -26,6 +26,3 @@ jobs:
 
       - name: Run Build
         run: npm run start
-
-      # - name: TypeScript Check
-      #  run: npm run type-check
