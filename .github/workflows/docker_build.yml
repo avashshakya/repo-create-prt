@@ -20,12 +20,14 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t practice-image:$(echo '${{ github.event.pull_request.title }}' | tr ' ' '-' | tr '/' '-') .
+          IMAGE_TAG=$(echo '${{ github.event.pull_request.title }}' | tr ' ' '-' | tr '/' '-')
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+          docker build -t practice-image:${IMAGE_TAG} .
 
       - name: Publish to Docker Hub
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: practice-image:$(echo '${{ github.event.pull_request.title }}' | tr ' ' '-' | tr '/' '-')
+          tags: practice-image:${{ IMAGE_TAG }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
