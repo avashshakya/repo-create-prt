@@ -1,0 +1,32 @@
+name: Docker build
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: dev
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          IMAGE_TAG=practice-image:$(echo '${{ github.event.pull_request.title }}' | tr ' ' '-')
+          docker build -t $IMAGE_TAG .
+
+      - name: Publish to Docker Hub
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: practice-image:$(echo '${{ github.event.pull_request.title }}' | tr ' ' '-')
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
