@@ -20,7 +20,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          IMAGE_TAG=practice-image:$(echo '${{ github.event.pull_request.title }}' | tr ' ' '-')
+          IMAGE_TAG=practice-image:$(echo '${{ github.event.pull_request.title }}' | tr ' ' '-' | tr '/' '-')
           docker build -t $IMAGE_TAG .
 
       - name: Publish to Docker Hub
