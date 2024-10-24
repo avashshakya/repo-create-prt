@@ -1,50 +1,29 @@
-# This is a basic workflow to help you get started with Actions
-
 name: PR Check
 
-# Controls when the workflow will run
 on:
   pull_request:
     branches:
       - dev
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: NodeJS
-        uses: actions/setup-node@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '20.18.0'
-      - name: Npm install
-        run: npm install
+          cache: 'npm'
 
-      - name: Run build
-        run: npm build
+      - name: Install Dependencies
+        run: npm ci  # Using npm ci for faster builds
 
-      - name: TS check
+      - name: Run Build
+        run: npm run build  # Corrected command to 'npm run build'
+
+      - name: TypeScript Check
         run: npm run type-check
-  
-  # build:
-  #   # The type of runner that the job will run on
-  #   runs-on: ubuntu-latest
-
-  #   # Steps represent a sequence of tasks that will be executed as part of the job
-  #   steps:
-  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-  #     - uses: actions/checkout@v4
-
-  #     # Runs a single command using the runners shell
-  #     - name: Run a one-line script
-  #       run: echo Hello, world!
-
-  #     # Runs a set of commands using the runners shell
-  #     - name: Run a multi-line script
-  #       run: |
-  #         echo Add other actions to build,
-  #         echo test, and deploy your project.
