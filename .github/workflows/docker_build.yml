@@ -28,6 +28,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: practice-image:${{ IMAGE_TAG }}
+          tags: practice-image:${{ env.IMAGE_TAG }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
