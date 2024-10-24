@@ -18,11 +18,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker image
+      - name: Get Docker Tag
         run: |
           IMAGE_TAG=$(echo '${{ github.event.pull_request.title }}' | tr ' ' '-' | tr '/' '-')
           echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
-          docker build -t practice-image:${IMAGE_TAG} .
 
       - name: Publish to Docker Hub
         uses: docker/build-push-action@v3
